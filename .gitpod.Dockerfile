@@ -38,6 +38,16 @@ RUN curl -LO https://get.helm.sh/helm-v3.15.4-linux-amd64.tar.gz && \
     tar -zxvf helm-v3.15.4-linux-amd64.tar.gz && \
     sudo mv linux-amd64/helm /usr/local/bin/helm && \
     rm -rf helm-v3.15.4-linux-amd64.tar.gz linux-amd64
+# Install k9s
+RUN curl -s https://api.github.com/repos/derailed/k9s/releases/latest \
+  | grep browser_download_url \
+  | grep Linux_amd64.tar.gz \
+  | cut -d '"' -f 4 \
+  | xargs curl -L -o k9s.tar.gz
+
+    tar -xzf k9s.tar.gz
+    sudo mv k9s /usr/local/bin/
+    rm k9s.tar.gz
 
 # Verify installations
 RUN terraform -version
@@ -45,5 +55,6 @@ RUN aws --version
 RUN kubectl version --client
 RUN eksctl version
 RUN helm version
+RUN k9s version
 
 USER gitpod
