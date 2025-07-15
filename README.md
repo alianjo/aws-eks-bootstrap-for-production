@@ -7,6 +7,7 @@ A preconfigured Gitpod workspace for cloud-native development using:
 - kubectl
 - eksctl
 - Helm, k9s, jq, yq
+- k9s
 
 ## Quick Start
 
