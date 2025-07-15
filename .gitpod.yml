@@ -1,0 +1,17 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Setup tools
+    init: |
+      echo "Checking tools..."
+      aws --version
+      terraform --version
+      kubectl version --client
+      eksctl version
+
+vscode:
+  extensions:
+    - hashicorp.terraform
+    - amazonwebservices.aws-toolkit-vscode
+    - ms-kubernetes-tools.vscode-kubernetes-tools
