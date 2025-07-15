@@ -12,7 +12,7 @@ A preconfigured Gitpod workspace for cloud-native development using:
 
 Open in Gitpod:
 
-[Open the environment](https://gitpod.io/#https://github.com/your-username/aws-dev-env)
+[Open the environment](https://gitpod.io/#https://github.com/alianjo/aws-dev-env)
 
 ## Tools Installed
 
