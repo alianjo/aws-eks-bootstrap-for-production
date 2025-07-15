@@ -9,6 +9,8 @@ tasks:
       terraform --version
       kubectl version --client
       eksctl version
+      chmod +x ./scripts/aws-login.sh
+      ./scripts/aws-login.sh
 
 vscode:
   extensions:
