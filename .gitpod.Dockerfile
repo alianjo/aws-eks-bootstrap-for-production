@@ -43,11 +43,10 @@ RUN curl -s https://api.github.com/repos/derailed/k9s/releases/latest \
   | grep browser_download_url \
   | grep Linux_amd64.tar.gz \
   | cut -d '"' -f 4 \
-  | xargs curl -L -o k9s.tar.gz
-
-    tar -zxvf k9s.tar.gz
-    sudo mv k9s /usr/local/bin/
-    rm k9s.tar.gz
+  | xargs curl -L -o k9s.tar.gz && \
+  tar -zxvf k9s.tar.gz && \
+  mv k9s /usr/local/bin/ && \
+  rm k9s.tar.gz
 
 # Verify installations
 RUN terraform -version
