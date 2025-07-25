@@ -45,7 +45,7 @@ RUN curl -s https://api.github.com/repos/derailed/k9s/releases/latest \
   | cut -d '"' -f 4 \
   | xargs curl -L -o k9s.tar.gz
 
-    tar -xzf k9s.tar.gz
+    tar -zxvf k9s.tar.gz
     sudo mv k9s /usr/local/bin/
     rm k9s.tar.gz
 
