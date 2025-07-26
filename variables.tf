@@ -1,20 +1,20 @@
 variable "aws_region" {
-    default = "us-east-1"
+  default = "us-east-1"
 }
 
 variable "ami_id" {
-    description = "Amazon machine Image ID"
-  
+  description = "Amazon machine Image ID"
+
 }
 
 variable "instance_type" {
-    default = "t2.micro"
-  
+  default = "t2.micro"
+
 }
 
 variable "key_name" {
-    description = "SSH key pair name"
-  
+  description = "SSH key pair name"
+
 }
 
 variable "vpc_id" {
