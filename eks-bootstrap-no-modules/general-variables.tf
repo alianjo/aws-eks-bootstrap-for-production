@@ -16,8 +16,3 @@ variable "team" {
   default     = "devops"
 }
 
-variable "cluster_name" {
-  description = "Cluster name"
-  type        = string
-  default     = "my-eks-cluster"
-}
