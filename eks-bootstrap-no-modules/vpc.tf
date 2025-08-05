@@ -19,10 +19,10 @@ module "vpc" {
   create_database_subnet_group       = var.vpc_create_database_subnet_group
   create_database_subnet_route_table = var.vpc_create_database_subnet_route_table
 
-  enable_dns_hostnames = true
-  enable_dns_support   = true
-
-  tags = local.common_tags
+  enable_dns_hostnames    = true
+  enable_dns_support      = true
+  map_public_ip_on_launch = true
+  tags                    = local.common_tags
   vpc_tags = {
     created_for = "eks-cluster"
   }
