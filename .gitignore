@@ -1,0 +1,36 @@
+# Local Terraform files
+.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash logs
+crash.log
+
+# Local override files
+override.tf
+override.tf.json
+
+# .terraform.lock.hcl files (optional, but recommended if you don't want to push the lock file)
+.terraform.lock.hcl
+
+# Encrypted variables files
+*.tfvars
+*.tfvars.json
+
+# Backup files (if you use vim or other editors that create backup files)
+*~ 
+*.swp
+*.swo
+
+# IDEs and editors (e.g., VSCode, JetBrains)
+.vscode/
+.idea/
+*.iml
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
