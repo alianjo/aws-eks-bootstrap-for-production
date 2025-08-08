@@ -1,4 +1,8 @@
 
+output "eks_cluster_name" {
+  description = "EKS cluster name"
+  value = aws_eks_cluster.eks_cluster.name
+}
 output "cluster_certificate_authority_data" {
   description = "Nested attribute containing certificate-authority-data for your cluster. This is the base64 encoded certificate data required to communicate with your cluster."
   value       = aws_eks_cluster.eks_cluster.certificate_authority[0].data
