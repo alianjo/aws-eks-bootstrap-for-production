@@ -12,9 +12,5 @@
 
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
-  },
-
-  "mounts": [
-    "source=${localWorkspaceFolder}/scripts,target=/workspace/scripts,type=bind"
-  ]
+  }
 }
