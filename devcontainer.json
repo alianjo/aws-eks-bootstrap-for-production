@@ -1,0 +1,20 @@
+{
+  "name": "AWS and Kubernetes Dev Environment",
+  "dockerFile": "Dockerfile", 
+
+  "postCreateCommand": "./scripts/aws-login.sh",
+
+  "extensions": [
+    "hashicorp.terraform",
+    "amazonwebservices.aws-toolkit-vscode",
+    "ms-kubernetes-tools.vscode-kubernetes-tools"
+  ],
+
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+
+  "mounts": [
+    "source=${localWorkspaceFolder}/scripts,target=/workspace/scripts,type=bind"
+  ]
+}
