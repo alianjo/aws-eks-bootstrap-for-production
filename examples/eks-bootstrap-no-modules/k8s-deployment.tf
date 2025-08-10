@@ -11,7 +11,7 @@ resource "kubernetes_deployment_v1" "myapp1" {
     selector {
       match_labels = {
         app = "myapp1"
-      }      
+      }
     }
     template {
       metadata {

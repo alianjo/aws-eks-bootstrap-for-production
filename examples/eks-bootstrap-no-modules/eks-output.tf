@@ -1,7 +1,7 @@
 
 output "eks_cluster_name" {
   description = "EKS cluster name"
-  value = aws_eks_cluster.eks_cluster.name
+  value       = aws_eks_cluster.eks_cluster.name
 }
 output "cluster_certificate_authority_data" {
   description = "Nested attribute containing certificate-authority-data for your cluster. This is the base64 encoded certificate data required to communicate with your cluster."
@@ -20,7 +20,7 @@ output "cluster_version" {
 
 output "cluster_iam_role_name" {
   description = "IAM role name of the EKS cluster."
-  value       = aws_iam_role.eks_master_role.name 
+  value       = aws_iam_role.eks_master_role.name
 }
 
 output "cluster_iam_role_arn" {
@@ -51,7 +51,7 @@ output "node_group_public_arn" {
 
 output "node_group_public_status" {
   description = "Public Node Group status"
-  value       = aws_eks_node_group.eks_ng_public.status 
+  value       = aws_eks_node_group.eks_ng_public.status
 }
 
 output "node_group_public_version" {
@@ -71,7 +71,7 @@ output "node_group_private_arn" {
 
 output "node_group_private_status" {
   description = "Private Node Group status"
-  value       = aws_eks_node_group.eks_ng_private.status 
+  value       = aws_eks_node_group.eks_ng_private.status
 }
 
 output "node_group_private_version" {
