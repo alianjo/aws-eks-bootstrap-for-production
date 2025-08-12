@@ -1,0 +1,38 @@
+{
+  "name": "AWS and Kubernetes Dev Environment",
+  "dockerfile": "./Dockerfile",
+  "context": "..",
+
+  "workspaceFolder": "/workspaces/aws-dev-env",
+
+  "postCreateCommand": "chmod +x ../scripts/aws-login.sh && ../scripts/aws-login.sh",
+
+  "extensions": [
+    "hashicorp.terraform",
+    "amazonwebservices.aws-toolkit-vscode",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "ms-vscode.vscode-json",
+    "yzhang.markdown-all-in-one"
+  ],
+
+  "settings": {
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "terraform.path": "/usr/local/bin/terraform",
+    "aws.region": "us-east-1"
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/devcontainers/features/terraform:1": {}
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "hashicorp.terraform",
+        "amazonwebservices.aws-toolkit-vscode",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
+      ]
+    }
+  }
+}
