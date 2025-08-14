@@ -67,26 +67,40 @@ resource "helm_release" "ebs_csi_driver" {
 
   repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
   chart      = "aws-ebs-csi-driver"
+  namespace  = "kube-system"
 
-  namespace = "kube-system"
-
-  set = [{
-    name  = "image.repository"
-    value = "602401143452.dkr.ecr.us-east-1.amazonaws.com/eks/aws-ebs-csi-driver" # Changes based on Region - This is for us-east-1 Additional Reference: https://docs.aws.amazon.com/eks/latest/userguide/add-ons-images.html
-    },
-    {
-      name  = "controller.serviceAccount.create"
-      value = "true"
-    },
-    {
-      name  = "controller.serviceAccount.name"
-      value = "ebs-csi-controller-sa"
-    },
-    {
-      name  = "controller.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-      value = aws_iam_role.ebs_csi_iam_role.arn
-  }]
+  values = [
+    yamlencode({
+      image = {
+        repository = "602401143452.dkr.ecr.us-east-1.amazonaws.com/eks/aws-ebs-csi-driver"
+      }
+      controller = {
+        serviceAccount = {
+          create = true
+          name   = "ebs-csi-controller-sa"
+          annotations = {
+            "eks.amazonaws.com/role-arn" = aws_iam_role.ebs_csi_iam_role.arn
+          }
+        }
+      }
+      storageClasses = [{
+        name                = "gp3"
+        parameters          = {
+          type                         = "gp3"
+          "csi.storage.k8s.io/fstype"  = "ext4"
+        }
+        reclaimPolicy       = "Delete"
+        volumeBindingMode   = "WaitForFirstConsumer"
+        allowVolumeExpansion = true
+        annotations = {
+          "storageclass.kubernetes.io/is-default-class" = "true"  # stays a string
+        }
+      }]
+    })
+  ]
 }
+
+
 
 output "ebs_csi_helm_metadata" {
   description = "Metadata Block outlining status of the deployed release."
