@@ -1,8 +1,8 @@
 resource "aws_iam_user" "admin_user" {
-  name = local.eks_user
-  path = "/"
+  name          = local.eks_user
+  path          = "/"
   force_destroy = true
-  tags = local.common_tags
+  tags          = local.common_tags
 }
 
 # Resource: Admin Access Policy - Attach it to admin user
@@ -18,10 +18,10 @@ output "account_id" {
 
 # Resource: AWS IAM User - Basic User (No AWSConsole Access)
 resource "aws_iam_user" "basic_user" {
-  name = "${local.name}-eksadmin2"
-  path = "/"
+  name          = "eks-admin"
+  path          = "/"
   force_destroy = true
-  tags = local.common_tags
+  tags          = local.common_tags
 }
 
 # Resource: AWS IAM User Policy - EKS Full Access
@@ -68,12 +68,12 @@ locals {
       userarn  = "${aws_iam_user.admin_user.arn}"
       username = "${aws_iam_user.admin_user.name}"
       groups   = ["system:masters"]
-    },    
+    },
   ]
 }
 # Resource: Kubernetes Config Map
 resource "kubernetes_config_map_v1" "aws_auth" {
-  depends_on = [aws_eks_cluster.eks_cluster  ]
+  depends_on = [aws_eks_cluster.eks_cluster]
   metadata {
     name      = "aws-auth"
     namespace = "kube-system"
@@ -81,5 +81,5 @@ resource "kubernetes_config_map_v1" "aws_auth" {
   data = {
     mapRoles = yamlencode(local.configmap_roles)
     mapUsers = yamlencode(local.configmap_users)
-  }  
+  }
 }

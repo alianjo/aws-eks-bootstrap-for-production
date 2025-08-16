@@ -84,16 +84,16 @@ resource "helm_release" "ebs_csi_driver" {
         }
       }
       storageClasses = [{
-        name                = "gp3"
-        parameters          = {
-          type                         = "gp3"
-          "csi.storage.k8s.io/fstype"  = "ext4"
+        name = "gp3"
+        parameters = {
+          type                        = "gp3"
+          "csi.storage.k8s.io/fstype" = "ext4"
         }
-        reclaimPolicy       = "Delete"
-        volumeBindingMode   = "WaitForFirstConsumer"
+        reclaimPolicy        = "Delete"
+        volumeBindingMode    = "WaitForFirstConsumer"
         allowVolumeExpansion = true
         annotations = {
-          "storageclass.kubernetes.io/is-default-class" = "true"  # stays a string
+          "storageclass.kubernetes.io/is-default-class" = "true" # stays a string
         }
       }]
     })
