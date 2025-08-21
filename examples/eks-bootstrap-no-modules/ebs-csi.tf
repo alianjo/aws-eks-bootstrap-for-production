@@ -62,8 +62,12 @@ output "ebs_csi_iam_role_arn" {
 }
 
 resource "helm_release" "ebs_csi_driver" {
-  depends_on = [aws_iam_role.ebs_csi_iam_role]
-  name       = "${local.name}-aws-ebs-csi-driver"
+  depends_on = [
+    aws_iam_role_policy_attachment.ebs_csi_iam_role_policy_attach,
+    aws_eks_node_group.eks_ng_private,
+    aws_eks_node_group.eks_ng_public
+  ]
+  name = "${local.name}-aws-ebs-csi-driver"
 
   repository = "https://kubernetes-sigs.github.io/aws-ebs-csi-driver"
   chart      = "aws-ebs-csi-driver"
