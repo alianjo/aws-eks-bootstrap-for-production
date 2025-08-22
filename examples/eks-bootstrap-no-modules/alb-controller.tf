@@ -8,16 +8,12 @@ data "http" "lbc_iam_policy" {
   }
 }
 
-output "lbc_iam_policy" {
-  value = data.http.lbc_iam_policy.body
-}
-
 # Resource: Create AWS Load Balancer Controller IAM Policy 
 resource "aws_iam_policy" "lbc_iam_policy" {
   name        = "${local.name}-AWSLoadBalancerControllerIAMPolicy"
   path        = "/"
   description = "AWS Load Balancer Controller IAM Policy"
-  policy      = data.http.lbc_iam_policy.body
+  policy      = data.http.lbc_iam_policy.response_body
 }
 
 output "lbc_iam_policy_arn" {
@@ -66,7 +62,7 @@ output "lbc_iam_role_arn" {
 }
 
 resource "helm_release" "loadbalancer_controller" {
-  depends_on = [aws_iam_role_policy_attachment.lbc_iam_role_policy_attach, aws_eks_node_group.eks_ng_private, aws_eks_node_group.eks_ng_public]
+  depends_on = [aws_iam_role_policy_attachment.lbc_iam_role_policy_attach, aws_eks_node_group.eks_ng_private]
 
   name       = "aws-load-balancer-controller"
   repository = "https://aws.github.io/eks-charts"
@@ -100,7 +96,7 @@ resource "helm_release" "loadbalancer_controller" {
     },
     {
       name  = "clusterName"
-      value = var.cluster_name
+      value = local.name
     }
   ]
 }
