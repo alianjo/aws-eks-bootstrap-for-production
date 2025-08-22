@@ -7,15 +7,11 @@ data "http" "ebs_csi_iam_policy" {
   }
 }
 
-output "ebs_csi_iam_policy" {
-  value = data.http.ebs_csi_iam_policy.body
-}
-
 resource "aws_iam_policy" "ebs_csi_iam_policy" {
   name        = "${local.name}-AmazonEKS_EBS_CSI_Driver_Policy"
   path        = "/"
   description = "EBS CSI IAM Policy"
-  policy      = data.http.ebs_csi_iam_policy.body
+  policy      = data.http.ebs_csi_iam_policy.response_body
 }
 
 output "ebs_csi_iam_policy_arn" {
@@ -64,8 +60,7 @@ output "ebs_csi_iam_role_arn" {
 resource "helm_release" "ebs_csi_driver" {
   depends_on = [
     aws_iam_role_policy_attachment.ebs_csi_iam_role_policy_attach,
-    aws_eks_node_group.eks_ng_private,
-    aws_eks_node_group.eks_ng_public
+    aws_eks_node_group.eks_ng_private
   ]
   name = "${local.name}-aws-ebs-csi-driver"
 
