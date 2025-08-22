@@ -23,6 +23,16 @@ module "vpc" {
   enable_dns_support      = true
   map_public_ip_on_launch = true
   tags                    = local.common_tags
+  public_subnet_tags = {
+    "kubernetes.io/role/elb"                                    = "1"
+    "kubernetes.io/cluster/${local.name}" = "owned"
+  }
+
+  private_subnet_tags = {
+    "kubernetes.io/role/internal-elb"                           = "1"
+    "kubernetes.io/cluster/${local.name}" = "owned"
+  }
+
   vpc_tags = {
     created_for = "eks-cluster"
   }
