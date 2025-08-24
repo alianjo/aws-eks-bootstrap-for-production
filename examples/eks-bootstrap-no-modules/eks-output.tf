@@ -1,20 +1,15 @@
-
 output "eks_cluster_name" {
   description = "EKS cluster name"
   value       = aws_eks_cluster.eks_cluster.name
 }
-output "cluster_certificate_authority_data" {
-  description = "Nested attribute containing certificate-authority-data for your cluster. This is the base64 encoded certificate data required to communicate with your cluster."
-  value       = aws_eks_cluster.eks_cluster.certificate_authority[0].data
-}
 
 output "cluster_endpoint" {
-  description = "The endpoint for your EKS Kubernetes API."
+  description = "The endpoint for your EKS Kubernetes API"
   value       = aws_eks_cluster.eks_cluster.endpoint
 }
 
 output "cluster_version" {
-  description = "The Kubernetes server version for the EKS cluster."
+  description = "The Kubernetes server version for the EKS cluster"
   value       = aws_eks_cluster.eks_cluster.version
 }
 
@@ -34,31 +29,15 @@ output "cluster_oidc_issuer_url" {
 }
 
 output "cluster_primary_security_group_id" {
-  description = "The cluster primary security group ID created by the EKS cluster on 1.14 or later. Referred to as 'Cluster security group' in the EKS console."
+  description = "Cluster security group ID"
   value       = aws_eks_cluster.eks_cluster.vpc_config[0].cluster_security_group_id
 }
 
-
-
-
-
-
-output "node_group_private_id" {
-  description = "Node Group 1 ID"
-  value       = aws_eks_node_group.eks_ng_private.id
-}
-
-output "node_group_private_arn" {
-  description = "Private Node Group ARN"
-  value       = aws_eks_node_group.eks_ng_private.arn
-}
-
-output "node_group_private_status" {
-  description = "Private Node Group status"
-  value       = aws_eks_node_group.eks_ng_private.status
-}
-
-output "node_group_private_version" {
-  description = "Private Node Group Kubernetes Version"
-  value       = aws_eks_node_group.eks_ng_private.version
+output "node_group_private" {
+  description = "Private Node Group information"
+  value = {
+    id      = aws_eks_node_group.eks_ng_private.id
+    status  = aws_eks_node_group.eks_ng_private.status
+    version = aws_eks_node_group.eks_ng_private.version
+  }
 }

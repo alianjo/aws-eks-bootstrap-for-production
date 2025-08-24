@@ -24,12 +24,12 @@ module "vpc" {
   map_public_ip_on_launch = true
   tags                    = local.common_tags
   public_subnet_tags = {
-    "kubernetes.io/role/elb"                                    = "1"
+    "kubernetes.io/role/elb"              = "1"
     "kubernetes.io/cluster/${local.name}" = "owned"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/role/internal-elb"                           = "1"
+    "kubernetes.io/role/internal-elb"     = "1"
     "kubernetes.io/cluster/${local.name}" = "owned"
   }
 
