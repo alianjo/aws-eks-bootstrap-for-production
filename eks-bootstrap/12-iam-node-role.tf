@@ -1,5 +1,6 @@
+# Create IAM Role for EKS Node Groups
 resource "aws_iam_role" "eks_nodegroup_role" {
-  name = "${local.name}-eks-nodegroup-role"
+  name = local.node_role_name
 
   assume_role_policy = jsonencode({
     Statement = [{
@@ -10,6 +11,11 @@ resource "aws_iam_role" "eks_nodegroup_role" {
       }
     }]
     Version = "2012-10-17"
+  })
+
+  tags = merge(local.common_tags, {
+    ResourceType = "iam-role"
+    Purpose      = "eks-nodegroup"
   })
 }
 

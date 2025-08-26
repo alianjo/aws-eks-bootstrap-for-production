@@ -5,7 +5,7 @@ data "aws_availability_zones" "azs" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = var.vpc_name
+  name = local.vpc_name_full
   cidr = var.vpc_cidr_block
 
   azs             = data.aws_availability_zones.azs.names
@@ -22,19 +22,29 @@ module "vpc" {
   enable_dns_hostnames    = true
   enable_dns_support      = true
   map_public_ip_on_launch = true
-  tags                    = local.common_tags
+  
+  tags = merge(local.common_tags, {
+    ResourceType = "vpc"
+  })
+  
   public_subnet_tags = {
-    "kubernetes.io/role/elb"              = "1"
-    "kubernetes.io/cluster/${local.name}" = "owned"
+    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/cluster/${local.cluster_name_full}" = "owned"
+    Name                                        = "${local.name_prefix}-public-subnet"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/role/internal-elb"     = "1"
-    "kubernetes.io/cluster/${local.name}" = "owned"
+    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/cluster/${local.cluster_name_full}" = "owned"
+    Name                                        = "${local.name_prefix}-private-subnet"
+  }
+
+  database_subnet_tags = {
+    Name = "${local.name_prefix}-database-subnet"
   }
 
   vpc_tags = {
-    created_for = "eks-cluster"
+    ResourceType = "vpc"
+    Purpose      = "eks-cluster"
   }
-
 }

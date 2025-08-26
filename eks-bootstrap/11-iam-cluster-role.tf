@@ -1,6 +1,6 @@
-# Create IAM Role
+# Create IAM Role for EKS Cluster
 resource "aws_iam_role" "eks_master_role" {
-  name = "${local.name}-eks-master-role"
+  name = local.cluster_role_name
 
   assume_role_policy = <<POLICY
 {
@@ -15,7 +15,11 @@ resource "aws_iam_role" "eks_master_role" {
     }
   ]
 }
-POLICY
+
+  tags = merge(local.common_tags, {
+    ResourceType = "iam-role"
+    Purpose      = "eks-cluster"
+  })
 }
 
 # Associate IAM Policy to IAM Role

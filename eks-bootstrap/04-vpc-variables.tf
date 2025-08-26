@@ -1,9 +1,4 @@
-variable "vpc_name" {
-  description = "The name of VPC"
-  type        = string
-  default     = "eks-vpc"
-}
-
+# VPC Input Variables
 variable "vpc_cidr_block" {
   description = "VPC CIDR Block"
   type        = string
@@ -22,7 +17,6 @@ variable "vpc_public_subnets" {
   default     = ["10.0.3.0/24", "10.0.6.0/24"]
 }
 
-
 # VPC Database Subnets
 variable "vpc_database_subnets" {
   description = "VPC Database Subnets"
@@ -40,7 +34,6 @@ variable "vpc_single_nat_gateway" {
   description = "Enable only single NAT gateway in one Availability Zone (for dev environments)"
   type        = bool
   default     = true
-
 }
 
 variable "vpc_create_database_subnet_group" {

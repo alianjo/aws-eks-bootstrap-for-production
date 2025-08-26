@@ -2,7 +2,7 @@
 resource "aws_eks_node_group" "eks_ng_public" {
   cluster_name = aws_eks_cluster.eks_cluster.name
 
-  node_group_name = "${local.name}-eks-ng-public"
+  node_group_name = local.public_node_group_name
   node_role_arn   = aws_iam_role.eks_nodegroup_role.arn
   subnet_ids      = module.vpc.public_subnets
   #version = var.cluster_version #(Optional: Defaults to EKS Cluster Kubernetes version)    
@@ -11,7 +11,6 @@ resource "aws_eks_node_group" "eks_ng_public" {
   capacity_type  = "ON_DEMAND"
   disk_size      = 20
   instance_types = ["t3.medium"]
-
 
   remote_access {
     ec2_ssh_key = aws_key_pair.eks_key_pair.key_name
@@ -37,10 +36,11 @@ resource "aws_eks_node_group" "eks_ng_public" {
     aws_iam_role_policy_attachment.eks-AmazonEC2ContainerRegistryReadOnly,
   ]
 
-  tags = {
-    Name = "Public-Node-Group"
+  tags = merge(local.common_tags, {
+    ResourceType = "eks-nodegroup"
+    NodeGroupType = "public"
     # Cluster Autoscaler Tags
-    "k8s.io/cluster-autoscaler/${local.name}" = "owned"
-    "k8s.io/cluster-autoscaler/enabled"       = "TRUE"
-  }
+    "k8s.io/cluster-autoscaler/${local.cluster_name_full}" = "owned"
+    "k8s.io/cluster-autoscaler/enabled"                   = "TRUE"
+  })
 }

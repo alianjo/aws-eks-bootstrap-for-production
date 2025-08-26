@@ -1,5 +1,5 @@
 resource "aws_eks_cluster" "eks_cluster" {
-  name     = local.name
+  name     = local.cluster_name_full
   role_arn = aws_iam_role.eks_master_role.arn
   version  = var.cluster_version
 
@@ -23,7 +23,9 @@ resource "aws_eks_cluster" "eks_cluster" {
     aws_iam_role_policy_attachment.eks-AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.eks-AmazonEKSVPCResourceController,
   ]
-  tags = {
-    environment = local.environment
-  }
+  
+  tags = merge(local.common_tags, {
+    ResourceType = "eks-cluster"
+    KubernetesVersion = var.cluster_version
+  })
 }

@@ -1,0 +1,30 @@
+# Example terraform.tfvars file
+# Copy this file to terraform.tfvars and modify the values
+
+# AWS Configuration
+region = "us-east-1"
+environment = "dev"
+team = "devops"
+cluster_name = "eksdemo"
+
+# VPC Configuration
+vpc_cidr_block = "10.0.0.0/16"
+vpc_private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
+vpc_public_subnets = ["10.0.3.0/24", "10.0.6.0/24"]
+vpc_database_subnets = ["10.0.151.0/24", "10.0.152.0/24"]
+
+# EKS Configuration
+cluster_version = "1.28"
+cluster_endpoint_private_access = false
+cluster_endpoint_public_access = true
+cluster_endpoint_public_access_cidrs = ["0.0.0.0/0"]
+
+# Backend Configuration (S3)
+# Uncomment and modify these lines to configure S3 backend
+# backend_config = {
+#   bucket = "your-terraform-state-bucket"
+#   key    = "eks-bootstrap/terraform.tfstate"
+#   region = "us-east-1"
+#   encrypt = true
+#   dynamodb_table = "terraform-locks"
+# }
