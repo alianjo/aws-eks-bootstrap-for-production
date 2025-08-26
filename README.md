@@ -2,7 +2,7 @@
 
 A complete **EKS (Elastic Kubernetes Service) bootstrap infrastructure** that automatically provisions a production-ready Kubernetes cluster on AWS using Terraform.
 
-## 🚀 What This Project Does
+## What This Project Does
 
 **Networking**: VPC with public/private subnets, NAT Gateways, route tables, database subnets  
 **EKS Cluster**: Control plane with logging, OIDC provider, configurable API endpoints  
@@ -10,7 +10,7 @@ A complete **EKS (Elastic Kubernetes Service) bootstrap infrastructure** that au
 **Compute**: Auto-scaling node groups (private/public) with AL2023 AMI  
 **Add-ons**: Cluster autoscaler, ALB controller, external DNS, metrics server, EBS/EFS CSI drivers
 
-## 🏗️ Infrastructure Structure
+## Infrastructure Structure
 
 ### **VPC & Networking**
 - **VPC**: 10.0.0.0/16 with public/private/database subnets across 2 AZs
@@ -31,7 +31,7 @@ A complete **EKS (Elastic Kubernetes Service) bootstrap infrastructure** that au
 - **Storage**: EBS CSI (block storage) + EFS CSI (file storage) drivers
 - **Monitoring**: Metrics server for Kubernetes resource metrics
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 eks-bootstrap/
@@ -59,7 +59,7 @@ eks-bootstrap/
 └── 22-efs-csi.tf                 # EFS CSI Driver
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### **Prerequisites:**
 - AWS CLI, Terraform, kubectl
@@ -82,21 +82,17 @@ aws eks update-kubeconfig --region us-east-1 --name devops-dev-eksdemo-eks-clust
 kubectl get nodes
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 **Defaults**: Region: `us-east-1`, Environment: `dev`, Team: `devops`, Cluster: `eksdemo`  
 **VPC**: `10.0.0.0/16`, Node Type: `t3.medium`, Auto-scaling: 1-2 nodes per group
 
 **Customize**: Edit `03-general-variables.tf` and `07-eks-variables.tf`
 
-## 🎯 Use Cases
+## Use Cases
 
 Development/Testing • Production Staging • Learning/Education • CI/CD Pipelines • Multi-team Development
 
-## 📚 Documentation
-
-- **`FILE_ORGANIZATION.md`** - File structure explanation
-- **`QUICK_REFERENCE.md`** - Navigation guide
 
 ## 🔧 Maintenance
 
@@ -106,6 +102,3 @@ terraform apply   # Apply updates
 terraform destroy # Clean up
 ```
 
----
-
-**Deploy production-ready AWS EKS infrastructure with this comprehensive Terraform configuration!** 🎉
