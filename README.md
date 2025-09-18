@@ -102,3 +102,61 @@ terraform apply   # Apply updates
 terraform destroy # Clean up
 ```
 
+## Environments (dev and prod)
+
+This repo supports separate state and variables for `dev` and `prod` via per-environment var files and backend configs.
+
+### Directory layout
+```
+environments/
+  dev/
+    dev.tfvars
+    backend.hcl
+  prod/
+    prod.tfvars
+    backend.hcl
+```
+
+### Configure remote state
+Create an S3 bucket and DynamoDB table (once):
+```bash
+aws s3 mb s3://CHANGE_ME-terraform-state --region us-east-1
+aws dynamodb create-table \
+  --table-name terraform-locks \
+  --attribute-definitions AttributeName=LockID,AttributeType=S \
+  --key-schema AttributeName=LockID,KeyType=HASH \
+  --billing-mode PAY_PER_REQUEST \
+  --region us-east-1
+```
+Edit `environments/*/backend.hcl` and set your bucket and region.
+
+### Workflows
+
+Dev:
+```bash
+cd eks-bootstrap
+terraform init -backend-config=../environments/dev/backend.hcl -reconfigure
+terraform plan  -var-file=../environments/dev/dev.tfvars
+terraform apply -var-file=../environments/dev/dev.tfvars
+```
+
+Prod:
+```bash
+cd eks-bootstrap
+terraform init -backend-config=../environments/prod/backend.hcl -reconfigure
+terraform plan  -var-file=../environments/prod/prod.tfvars
+terraform apply -var-file=../environments/prod/prod.tfvars
+```
+
+### kubeconfig examples
+```bash
+aws eks update-kubeconfig --region us-east-1 --name devops-dev-eksdemo-eks-cluster
+aws eks update-kubeconfig --region us-east-1 --name devops-prod-eksdemo-eks-cluster --alias prod
+```
+
+### Tips / Best Practices
+- Use separate AWS accounts or at least separate S3 state prefixes per environment.
+- Keep `prod` node sizes and replica counts higher than `dev`.
+- Tag resources via locals to include `Environment` and `Team` (already configured).
+- Consider separate Route53 hosted zones or subdomains per environment.
+
