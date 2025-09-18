@@ -37,10 +37,10 @@ resource "aws_eks_node_group" "eks_ng_public" {
   ]
 
   tags = merge(local.common_tags, {
-    ResourceType = "eks-nodegroup"
+    ResourceType  = "eks-nodegroup"
     NodeGroupType = "public"
     # Cluster Autoscaler Tags
     "k8s.io/cluster-autoscaler/${local.cluster_name_full}" = "owned"
-    "k8s.io/cluster-autoscaler/enabled"                   = "TRUE"
+    "k8s.io/cluster-autoscaler/enabled"                    = "TRUE"
   })
 }

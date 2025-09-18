@@ -22,21 +22,21 @@ module "vpc" {
   enable_dns_hostnames    = true
   enable_dns_support      = true
   map_public_ip_on_launch = true
-  
+
   tags = merge(local.common_tags, {
     ResourceType = "vpc"
   })
-  
+
   public_subnet_tags = {
-    "kubernetes.io/role/elb"                    = "1"
+    "kubernetes.io/role/elb"                           = "1"
     "kubernetes.io/cluster/${local.cluster_name_full}" = "owned"
-    Name                                        = "${local.name_prefix}-public-subnet"
+    Name                                               = "${local.name_prefix}-public-subnet"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/role/internal-elb"           = "1"
+    "kubernetes.io/role/internal-elb"                  = "1"
     "kubernetes.io/cluster/${local.cluster_name_full}" = "owned"
-    Name                                        = "${local.name_prefix}-private-subnet"
+    Name                                               = "${local.name_prefix}-private-subnet"
   }
 
   database_subnet_tags = {

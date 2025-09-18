@@ -15,6 +15,7 @@ resource "aws_iam_role" "eks_master_role" {
     }
   ]
 }
+POLICY
 
   tags = merge(local.common_tags, {
     ResourceType = "iam-role"

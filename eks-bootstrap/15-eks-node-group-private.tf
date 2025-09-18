@@ -35,12 +35,12 @@ resource "aws_eks_node_group" "eks_ng_private" {
     aws_iam_role_policy_attachment.eks-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.eks-AmazonEC2ContainerRegistryReadOnly,
   ]
-  
+
   tags = merge(local.common_tags, {
-    ResourceType = "eks-nodegroup"
+    ResourceType  = "eks-nodegroup"
     NodeGroupType = "private"
     # Cluster Autoscaler Tags
     "k8s.io/cluster-autoscaler/${local.cluster_name_full}" = "owned"
-    "k8s.io/cluster-autoscaler/enabled"                   = "TRUE"
+    "k8s.io/cluster-autoscaler/enabled"                    = "TRUE"
   })
 }
