@@ -86,35 +86,39 @@ resource "helm_release" "cluster_autoscaler_release" {
   chart      = "cluster-autoscaler"
 
   namespace = "kube-system"
-  set {
-    name  = "cloudProvider"
-    value = "aws"
-  }
 
-  set {
-    name  = "autoDiscovery.clusterName"
-    value = aws_eks_cluster.eks_cluster.id
-  }
+  set = [
+    {
+      name  = "cloudProvider"
+      value = "aws"
+    },
 
-  set {
-    name  = "awsRegion"
-    value = var.region
-  }
+    {
+      name  = "autoDiscovery.clusterName"
+      value = aws_eks_cluster.eks_cluster.id
+    },
 
-  set {
-    name  = "rbac.serviceAccount.create"
-    value = "true"
-  }
+    {
+      name  = "awsRegion"
+      value = var.region
+    },
 
-  set {
-    name  = "rbac.serviceAccount.name"
-    value = "cluster-autoscaler"
-  }
+    {
+      name  = "rbac.serviceAccount.create"
+      value = "true"
+    },
 
-  set {
-    name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = aws_iam_role.cluster_autoscaler_iam_role.arn
-  }
+    {
+      name  = "rbac.serviceAccount.name"
+      value = "cluster-autoscaler"
+    },
+
+    {
+      name  = "rbac.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
+      value = aws_iam_role.cluster_autoscaler_iam_role.arn
+    }
+  ]
+
   # Additional Arguments (Optional) - To Test How to pass Extra Args for Cluster Autoscaler
   #set {
   #  name = "extraArgs.scan-interval"
