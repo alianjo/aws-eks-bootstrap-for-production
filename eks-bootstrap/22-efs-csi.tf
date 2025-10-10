@@ -30,7 +30,7 @@ resource "aws_iam_role" "efs_csi_iam_role" {
         Effect = "Allow"
         Sid    = ""
         Principal = {
-          Federated = "${aws_iam_openid_connect_provider.oidc_provider.arn}"
+          Federated = aws_iam_openid_connect_provider.oidc_provider.arn
         }
         Condition = {
           StringEquals = {
@@ -76,7 +76,7 @@ resource "helm_release" "efs_csi_driver" {
     },
     {
       name  = "controller.serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-      value = "${aws_iam_role.efs_csi_iam_role.arn}"
+      value = aws_iam_role.efs_csi_iam_role.arn
     }
   ]
 
