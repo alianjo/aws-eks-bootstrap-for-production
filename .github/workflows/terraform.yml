@@ -40,7 +40,7 @@ jobs:
       - name: Install TFLint
         uses: terraform-linters/setup-tflint@v1
       - name: Run TFLint
-        run: tflint ${{ env.WORKING_DIR }}
+        run: tflint --chdir=${{ env.WORKING_DIR }}
 
   plan:
     name: Terraform Plan
